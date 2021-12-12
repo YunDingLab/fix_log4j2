@@ -13,7 +13,7 @@ IMAGE_RELEASE = ${IMAGE_NAME}:${VERSION}
 
 LD_FLAGS = -X ${MODULE}/version.version=$(VERSION) \
  -X ${MODULE}/version.gitCommit=$(GIT_COMMIT) \
- -X ${MODULE}/version.buildAt=$(BUILD_AT)
+ -X ${MODULE}/version.builtAt=$(BUILD_TIME)
 
 run: local
 	./bundles/$(APP) -c ./internal/config/example.yaml

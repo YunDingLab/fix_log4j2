@@ -1,6 +1,9 @@
 package version
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+)
 
 var (
 	version   string
@@ -22,4 +25,10 @@ func BuiltAt() string {
 
 func Completed() string {
 	return fmt.Sprintf("%s-%s", version, gitCommit)
+}
+
+func Fprint(w io.Writer) {
+	fmt.Fprintf(w, "Version:\t%s\n", version)
+	fmt.Fprintf(w, "Git Commit:\t%s\n", gitCommit)
+	fmt.Fprintf(w, "Built At:\t%s\n", builtAt)
 }
