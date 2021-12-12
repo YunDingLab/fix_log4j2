@@ -36,6 +36,17 @@ release-image: push-image
 	docker tag ${IMAGE_TEST} ${IMAGE_RELEASE}
 	docker push ${IMAGE_RELEASE}
 
+release: clean
+	GOOS=linux make build
+	cd ./bundles && tar zcvf ./${APP}.linux-${shell go env GOARCH}.tar.gz ./${APP}
+	GOOS=windows make build
+	cd ./bundles && tar zcvf ./${APP}.windows-${shell go env GOARCH}.tar.gz ./${APP}
+	GOOS=darwin make build
+	cd ./bundles && tar zcvf ./${APP}.darwin-${shell go env GOARCH}.tar.gz ./${APP}
+
+clean:
+	rm -rf ./bundles
+
 ver:
 	@echo "Version:   " $(VERSION)
 	@echo "Git commit:" $(GIT_COMMIT)

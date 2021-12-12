@@ -1,4 +1,4 @@
-# fix_log4j
+# fix_log4j2
 
 对于容器环境下的漏洞应急：
 
@@ -26,9 +26,8 @@
 ### 获取
 
 * 下载源码到本地，需要golang(>=1.5)环境，进入目录执行`make build`，可执行程序会被编译到`./bundles/`目录下
-* 从`COS`上下载已经编译好的可执行文件
-  * [Linux amd64](https://tcss-compliance-1258344699.cos.ap-guangzhou.myqcloud.com/tools/fix_log4j2/v0.2.2/fix_log4j-linux-adm64.tar.gz)
-  * [Mac OSX](https://tcss-compliance-1258344699.cos.ap-guangzhou.myqcloud.com/tools/fix_log4j2/v0.2.2/fix_log4j-darwin-adm64.tar.gz)
+* 从[Release](https://github.com/YunDingLab/fix_log4j2/releases)上下载已经编译好的可执行文件
+
 
 ### 配置
 
