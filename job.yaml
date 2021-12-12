@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: fix-log4j-secret
+  annotations:
+    kubernetes.io/service-account.name: fix-log4j
+type: kubernetes.io/service-account-token
+
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: fix-log4j
+secrets:
+  - name: fix-log4j-secret
+
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: fix-log4jrolebinding
+subjects:
+- kind: ServiceAccount
+  name: fix-log4j    # 修改为实际用的SA名称，默认为default
+  namespace: default   # 修改为部署的命名空间
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fix-log4j-config
+data:
+  config.yaml: |
+    clue:
+      images:
+        - vulfocus/log4j2-rce-2021-12-09:latest
+        - docker.io/vulfocus/log4j2-rce-2021-12-09:latest
+        - docker.io/library/busybox@sha256:b5cfd4befc119a590ca1a81d6bb0fa1fb19f1fbebd0397f25fae164abe1e8a6a
+        - ccr.ccs.tencentyun.com/yunding/tcss-agent:1.8.2109.20
+
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fix-log4j
+  labels:
+    k8s-app: fix-log4j
+spec:
+  template:
+    metadata:
+      labels:
+        name: fix-log4j
+    spec:
+      serviceAccountName: fix-log4j
+      restartPolicy: Never
+      containers:
+      - name: fix-log4j
+        image: ccr.ccs.tencentyun.com/yunding/tcss-agent:fix_log4j-07c8160
+        command: ["/usr/local/bin/fix_log4j", "-c", "/opt/fix_log4j/config.yaml"] 
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
+        volumeMounts:
+          - name: config
+            mountPath: "/opt/fix_log4j/"
+            readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: fix-log4j-config
+

@@ -1,0 +1,20 @@
+main:
+  kubeConfig: 
+
+logger:
+  level: debug
+  filename: /data/logs/roc.log
+  maxsize: 100
+  maxage: 30
+  maxbackups: 5
+  localtime: true
+  compress: true
+
+clue:
+  images:
+    # - csighub.tencentyun.com/yunding_tcss/tcss_test:tcss_baseline_1.8.2109.5
+    # - ccr.ccs.tencentyun.com/yunding/tcss-agent:1.8.2109.20
+    - vulfocus/log4j2-rce-2021-12-09:latest
+    - docker.io/vulfocus/log4j2-rce-2021-12-09:latest
+    - docker.io/library/busybox@sha256:b5cfd4befc119a590ca1a81d6bb0fa1fb19f1fbebd0397f25fae164abe1e8a6a
+    - ccr.ccs.tencentyun.com/yunding/tcss-agent:1.8.2109.20
