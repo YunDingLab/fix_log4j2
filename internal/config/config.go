@@ -72,6 +72,7 @@ func LoadYamlLocalFile(file string, cfg interface{}) error {
 		logs.Errorf("[config] laod %s failed, %s", file, err)
 		return err
 	}
+	defer f.Close()
 
 	err = yaml.NewDecoder(f).Decode(cfg)
 	if err != nil {

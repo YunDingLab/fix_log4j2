@@ -1,4 +1,4 @@
-# fix_log4j2
+# fix_log4j
 
 对于容器环境下的漏洞应急：
 
@@ -26,8 +26,9 @@
 ### 获取
 
 * 下载源码到本地，需要golang(>=1.5)环境，进入目录执行`make build`，可执行程序会被编译到`./bundles/`目录下
-* 从[Release](https://github.com/YunDingLab/fix_log4j2/releases)上下载已经编译好的可执行文件
-
+* 从`COS`上下载已经编译好的可执行文件
+  * [Linux amd64](https://tcss-compliance-1258344699.cos.ap-guangzhou.myqcloud.com/tools/fix_log4j2/v0.2.2/fix_log4j-linux-adm64.tar.gz)
+  * [Mac OSX](https://tcss-compliance-1258344699.cos.ap-guangzhou.myqcloud.com/tools/fix_log4j2/v0.2.2/fix_log4j-darwin-adm64.tar.gz)
 
 ### 配置
 
@@ -70,11 +71,12 @@ clue:
 # TODO
 
 * [ ] 支持较老版本的修复策略
-* [ ] 支持增加环境变量 FORMAT_MESSAGES_PATTERN_DISABLE_LOOKUPS=true
+* [ ] 支持其它修复策略
+  * [ ] 环境变量 FORMAT_MESSAGES_PATTERN_DISABLE_LOOKUPS=true
 * [ ] 支持更新后的检查，如果失败可自动回滚
 * [ ] 支持镜像更新
 * [ ] 支持自动检查，而不用指定具体镜像列表
 
 # Q&A
 
-[项目 Issue](https://github.com/YunDingLab/fix_log4j2/issues)
+[Issue](https://github.com/YunDingLab/fix_log4j2/issues)
