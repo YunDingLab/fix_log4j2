@@ -72,7 +72,7 @@ clue:
 
 * [ ] 支持较老版本的修复策略
 * [ ] 支持其它修复策略
-  * [ ] 环境变量 FORMAT_MESSAGES_PATTERN_DISABLE_LOOKUPS=true
+  * [x] 环境变量 FORMAT_MESSAGES_PATTERN_DISABLE_LOOKUPS=true
 * [ ] 支持更新后的检查，如果失败可自动回滚
 * [ ] 支持镜像更新
 * [ ] 支持自动检查，而不用指定具体镜像列表

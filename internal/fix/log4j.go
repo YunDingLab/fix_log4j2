@@ -258,6 +258,25 @@ CONTAINER_LOOP:
 			"args", podCon.Args,
 			"workload", kw.wl.ToString(),
 		)
+		exiEnv := false
+		for _, env := range con.Env {
+			if env.Name == "FORMAT_MESSAGES_PATTERN_DISABLE_LOOKUPS" {
+				exiEnv = true
+				break
+			}
+		}
+		if exiEnv {
+			con.Env = append(con.Env, v1.EnvVar{
+				Name:  "FORMAT_MESSAGES_PATTERN_DISABLE_LOOKUPS",
+				Value: "true",
+			})
+			logs.Infow("[fixer] add env",
+				"env", "FORMAT_MESSAGES_PATTERN_DISABLE_LOOKUPS",
+				"container", con.Name,
+				"workload", kw.wl.ToString(),
+			)
+			modified = true
+		}
 		for _, v := range append(podCon.Command, podCon.Args...) {
 			if v == "-Dlog4j2.formatMsgNoLookups=true" {
 				logs.Infow("[fixer] had fixed, skip",
@@ -271,7 +290,7 @@ CONTAINER_LOOP:
 			con.Args = insertAt(podCon.Args, "-Dlog4j2.formatMsgNoLookups=true", 1)
 			modified = true
 			podspec.Containers[i] = con
-			logs.Warnw("[fixer] modify args",
+			logs.Infow("[fixer] modify args",
 				"old", podCon.Args,
 				"new", con.Args,
 				"container", con.Name,
@@ -296,7 +315,7 @@ CONTAINER_LOOP:
 
 		if len(podCon.Command) > 1 {
 			con.Command = insertAt(podCon.Command, "-Dlog4j2.formatMsgNoLookups=true", 1)
-			logs.Warnw("[fixer] modify command",
+			logs.Infow("[fixer] modify command",
 				"old", podCon.Command,
 				"new", con.Command,
 				"container", con.Name,
@@ -304,7 +323,7 @@ CONTAINER_LOOP:
 			)
 		} else if len(podCon.Args) > 0 {
 			con.Args = insertAt(podCon.Args, "-Dlog4j2.formatMsgNoLookups=true", 0)
-			logs.Warnw("[fixer] modify args",
+			logs.Infow("[fixer] modify args",
 				"old", podCon.Args,
 				"new", con.Args,
 				"container", con.Name,
