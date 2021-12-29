@@ -17,6 +17,7 @@
 ### 相关链接
 
 * [腾讯容器安全服务首推Apache Log4j2漏洞线上修复方案](https://mp.weixin.qq.com/s/scvnfJl2hc0cUXnWygGO_w)
+* [【安全通告】Apache log4j2 远程代码执行漏洞风险通告（CVE-2021-44832）](https://mp.weixin.qq.com/s/8pJBuiQLUcUlBQRanvDCJg)
 
 
 # 本工具使用
